@@ -6,6 +6,7 @@ var imgEl3 = document.getElementById('image3');
 
 var elArray = [imgEl1, imgEl2, imgEl3];
 var images = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+var totalClicks = 0;
 Item.allItems = [];
 
 function Item(src, alt) {
@@ -56,8 +57,31 @@ function randomizer(e) {
 
   imgEl1.setAttribute('src', Item.allItems[randomNumberArray[0]].src);
   imgEl1.alt = Item.allItems[randomNumberArray[0]].alt;
+
   imgEl2.setAttribute('src', Item.allItems[randomNumberArray[1]].src);
   imgEl2.alt = Item.allItems[randomNumberArray[1]].alt;
+
   imgEl3.setAttribute('src', Item.allItems[randomNumberArray[2]].src);
   imgEl3.alt = Item.allItems[randomNumberArray[2]].alt;
 }
+
+function setImages() {
+  var initialLoad = [];
+  for (var x in elArray) {
+    initialLoad.push(Math.floor(Math.random() * Item.allItems.length));
+  }
+
+  imgEl1.setAttribute('src', Item.allItems[initialLoad[0]].src);
+  imgEl1.alt = Item.allItems[initialLoad[0]].alt;
+  Item.allItems[initialLoad[0]].displayed += 1;
+
+  imgEl2.setAttribute('src', Item.allItems[initialLoad[1]].src);
+  imgEl2.alt = Item.allItems[initialLoad[1]].alt;
+  Item.allItems[initialLoad[1]].displayed += 1;
+
+  imgEl3.setAttribute('src', Item.allItems[initialLoad[2]].src);
+  imgEl3.alt = Item.allItems[initialLoad[2]].alt;
+  Item.allItems[initialLoad[2]].displayed += 1;
+}
+
+setImages();
