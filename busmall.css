@@ -1,0 +1,29 @@
+h1, p {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+section {
+  width: 80%;
+  margin: 0 auto;
+}
+
+img {
+  width: 300px;
+  height: auto;
+  display: inline-block;
+  border: 1px solid black;
+  vertical-align: middle;
+  margin: 10px 15px;
+}
+
+ul {
+  list-style: none;
+  line-height: 1.2em;
+  text-align: center;
+  padding-left: 0;
+}
+
+li {
+  margin: 10px
+}
