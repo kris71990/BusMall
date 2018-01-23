@@ -3,7 +3,8 @@
 var imgEl1 = document.getElementById('image1');
 var imgEl2 = document.getElementById('image2');
 var imgEl3 = document.getElementById('image3');
-var section = document.getElementById('images');
+var sectionImages = document.getElementById('images');
+var sectionTotal = document.getElementById('totals');
 
 var elArray = [imgEl1, imgEl2, imgEl3];
 var images = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
@@ -57,11 +58,11 @@ function randomizer(e) {
   console.log('Selected: ' + target);
 
   // set more images or display data
-  if (totalClicks === 25) {
+  if (totalClicks === 5) {
     imgEl1.removeEventListener('click', randomizer);
     imgEl2.removeEventListener('click', randomizer);
     imgEl3.removeEventListener('click', randomizer);
-    // updateSelections();
+    
     displayTable();
     renderChart();
   } else {
@@ -72,7 +73,9 @@ function randomizer(e) {
 // called to display data
 function displayTable() {
   totalClicks = 0;
-  section.innerHTML = '';
+  sectionImages.innerHTML = '';
+  var h3 = document.createElement('h3');
+  h3.textContent = 'Data';
   var ul = document.createElement('ul');
 
   for (var i = 0; i < Item.allItems.length; i++) {
@@ -110,7 +113,9 @@ function displayTable() {
     ul.appendChild(li);
 
   }
-  section.appendChild(ul);
+  sectionTotal.setAttribute('style', 'border: 5px solid black');
+  sectionTotal.appendChild(h3);
+  sectionTotal.appendChild(ul);
 }
 
 function renderChart() {
@@ -129,7 +134,7 @@ function renderChart() {
       title: {
         display: true,
         text: 'Your Most Selected Items',
-        fontSize: 16
+        fontSize: 20
       },
       scales: {
         yAxes: [{
