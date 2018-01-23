@@ -3,6 +3,7 @@
 var imgEl1 = document.getElementById('image1');
 var imgEl2 = document.getElementById('image2');
 var imgEl3 = document.getElementById('image3');
+var section = document.getElementById('images');
 
 var elArray = [imgEl1, imgEl2, imgEl3];
 var images = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
@@ -32,6 +33,9 @@ imgEl2.addEventListener('click', randomizer);
 imgEl3.addEventListener('click', randomizer);
 
 function randomizer(e) {
+  totalClicks += 1;
+  console.log('Total: ' + totalClicks);
+
   // keep track of image that was clicked
   var target = e.target.alt;
   for (var x = 0; x < Item.allItems.length; x++) {
@@ -40,48 +44,38 @@ function randomizer(e) {
       console.log(Item.allItems[x].selected);
     }
   }
-  var randomNumberArray = [];
   console.log('Selected: ' + target);
 
+  if (totalClicks === 5) {
+    section.innerHTML = '';
+  } else {
+    setImages();
+  }
+}
+
+function setImages() {
   // generate new set of random images and count the ones displayed
+  var randomNumbers = [];
+
   for (var i = 0; i < elArray.length; i++) {
     var random = Math.floor(Math.random() * Item.allItems.length);
-    if (randomNumberArray.includes(random)) {
+    if (randomNumbers.includes(random)) {
       i -= 1;
     } else {
-      randomNumberArray.push(random);
+      randomNumbers.push(random);
       Item.allItems[random].displayed += 1;
       console.log('Displayed: ' + Item.allItems[random].alt + ' ' + Item.allItems[random].displayed);
     }
   }
 
-  imgEl1.setAttribute('src', Item.allItems[randomNumberArray[0]].src);
-  imgEl1.alt = Item.allItems[randomNumberArray[0]].alt;
+  imgEl1.setAttribute('src', Item.allItems[randomNumbers[0]].src);
+  imgEl1.alt = Item.allItems[randomNumbers[0]].alt;
 
-  imgEl2.setAttribute('src', Item.allItems[randomNumberArray[1]].src);
-  imgEl2.alt = Item.allItems[randomNumberArray[1]].alt;
+  imgEl2.setAttribute('src', Item.allItems[randomNumbers[1]].src);
+  imgEl2.alt = Item.allItems[randomNumbers[1]].alt;
 
-  imgEl3.setAttribute('src', Item.allItems[randomNumberArray[2]].src);
-  imgEl3.alt = Item.allItems[randomNumberArray[2]].alt;
-}
-
-function setImages() {
-  var initialLoad = [];
-  for (var x in elArray) {
-    initialLoad.push(Math.floor(Math.random() * Item.allItems.length));
-  }
-
-  imgEl1.setAttribute('src', Item.allItems[initialLoad[0]].src);
-  imgEl1.alt = Item.allItems[initialLoad[0]].alt;
-  Item.allItems[initialLoad[0]].displayed += 1;
-
-  imgEl2.setAttribute('src', Item.allItems[initialLoad[1]].src);
-  imgEl2.alt = Item.allItems[initialLoad[1]].alt;
-  Item.allItems[initialLoad[1]].displayed += 1;
-
-  imgEl3.setAttribute('src', Item.allItems[initialLoad[2]].src);
-  imgEl3.alt = Item.allItems[initialLoad[2]].alt;
-  Item.allItems[initialLoad[2]].displayed += 1;
+  imgEl3.setAttribute('src', Item.allItems[randomNumbers[2]].src);
+  imgEl3.alt = Item.allItems[randomNumbers[2]].alt;
 }
 
 setImages();
