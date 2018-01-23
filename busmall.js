@@ -9,10 +9,9 @@ var elArray = [imgEl1, imgEl2, imgEl3];
 var images = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 var totalClicks = 0;
 Item.allItems = [];
+Item.lastDisplayed = [];
+Item.totalVotes = [];
 
-
-// create variable on constructor function for last displayed
-// from setImage function in loop, push indices to constructor array
 // check if index is in lastDisplayed
 // if yes, choose new index, if no push to list
 // reset lastDisplayed array to []
@@ -22,7 +21,6 @@ function Item(src, alt) {
   this.alt = alt;
   this.displayed = 0;
   this.selected = 0;
-  //this.lastDisplayed = [];
   Item.allItems.push(this);
 }
 
@@ -58,13 +56,14 @@ function randomizer(e) {
   }
   console.log('Selected: ' + target);
 
-  // removeEventListener('click', same function as was called in the addEventListener function)
-
   // set more images or display data
   if (totalClicks === 25) {
+    imgEl1.removeEventListener('click', randomizer);
+    imgEl2.removeEventListener('click', randomizer);
+    imgEl3.removeEventListener('click', randomizer);
     // updateSelections();
     displayTable();
-    // renderChart();
+    renderChart();
   } else {
     setImages();
   }
@@ -79,6 +78,7 @@ function displayTable() {
   for (var i = 0; i < Item.allItems.length; i++) {
     var selected = Item.allItems[i].selected;
     var displayed = Item.allItems[i].displayed;
+    Item.totalVotes.push(Item.allItems[i].selected);
     var rate;
 
     // calculate rate
@@ -113,37 +113,35 @@ function displayTable() {
   section.appendChild(ul);
 }
 
-/* 
 function renderChart() {
   var ctx = document.getElementById('chart').getContext('2d');
   var chart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [array of image names (global variable 'images') to be displayed for each bar]
+      labels: images,
+      datasets : [{
+        label: 'Items',
+        data: Item.totalVotes,
+        backgroundColor: ['black', 'red', 'black', 'red', 'black', 'red', 'black', 'red', 'black', 'red','black', 'red', 'black', 'red', 'black', 'red', 'black', 'red', 'black', 'red']
+      }]
     },
-    datasets : {
-      label: title of chart,
-      data: number of votes per image from global array created to store selection values from each object,
-      backgroundColors: [array of hex values for each value in data array],
-      borderColor: [same as background],
-      borderWidth: ...
-    }
     options: {
-      scales {
+      title: {
+        display: true,
+        text: 'Your Most Selected Items',
+        fontSize: 16
+      },
+      scales: {
         yAxes: [{
           ticks: {
-            beginsAtZero: true;
+            beginAtZero: true,
+            stepSize: 1,
           }
         }]
       }
     }
   });
-} 
-
-function updateSelections() {
-  iterate through array of objects and record selection data to be referenced in chart.datasets
 }
-*/
 
 // selects a set of three random images
 function setImages() {
@@ -152,19 +150,19 @@ function setImages() {
 
   for (var i = 0; i < elArray.length; i++) {
     var random = Math.floor(Math.random() * Item.allItems.length);
-    if (randomNumbers.includes(random)) {
+    if (randomNumbers.includes(random) || Item.lastDisplayed.includes(random)) {
       i -= 1;
     } else {
-      randomNumbers.push(random);
-      //Item.allItems[random].lastDisplayed.push(random);
-      // if ... clear lastDisplayed array
 
+      randomNumbers.push(random);
+      if (Item.lastDisplayed.length > 3) {
+        Item.lastDisplayed = [];
+      }
+      Item.lastDisplayed[i] = random;
       Item.allItems[random].displayed += 1;
       console.log('Displayed: ' + Item.allItems[random].alt + '- ' + Item.allItems[random].displayed);
     }
   }
-
-  // put this in for loop
 
   imgEl1.setAttribute('src', Item.allItems[randomNumbers[0]].src);
   imgEl1.alt = Item.allItems[randomNumbers[0]].alt;
