@@ -46,11 +46,40 @@ function randomizer(e) {
   }
   console.log('Selected: ' + target);
 
-  if (totalClicks === 5) {
-    section.innerHTML = '';
+  // turn off randomizer
+  if (totalClicks === 25) {
+    displayTable();
   } else {
     setImages();
   }
+}
+
+function displayTable() {
+  totalClicks = 0;
+  section.innerHTML = '';
+  var ul = document.createElement('ul');
+
+  for (var i = 0; i < Item.allItems.length; i++) {
+    var selectedTimes = '';
+    var displayedTimes = '';
+    var li = document.createElement('li');
+    if (Item.allItems[i].selected === 1) {
+      selectedTimes = 'time';
+    } else {
+      selectedTimes = 'times';
+    }
+    
+    if (Item.allItems[i].displayed === 1) {
+      displayedTimes = 'time';
+    } else {
+      displayedTimes = 'times';
+    }
+
+    li.textContent = Item.allItems[i].alt + ' was displayed ' + Item.allItems[i].displayed + ' ' + displayedTimes + ' and selected ' + Item.allItems[i].selected + ' ' + selectedTimes;
+    ul.appendChild(li);
+
+  }
+  section.appendChild(ul);
 }
 
 function setImages() {

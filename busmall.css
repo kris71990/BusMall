@@ -16,3 +16,10 @@ img {
   vertical-align: middle;
   margin: 10px 15px;
 }
+
+ul {
+  list-style: none;
+  line-height: 1.5em;
+  text-align: center;
+  padding-left: 0;
+}
