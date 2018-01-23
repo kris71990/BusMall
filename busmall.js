@@ -47,7 +47,7 @@ function randomizer(e) {
   console.log('Selected: ' + target);
 
   // turn off randomizer
-  if (totalClicks === 25) {
+  if (totalClicks === 5) {
     displayTable();
   } else {
     setImages();
@@ -62,20 +62,24 @@ function displayTable() {
   for (var i = 0; i < Item.allItems.length; i++) {
     var selected = Item.allItems[i].selected;
     var displayed = Item.allItems[i].displayed;
-    var rate = Math.round((selected / displayed) * 100);
+    var rate; 
+    
+    if (displayed === 0) {
+      rate = 0;
+    } else {
+      rate = Math.round((selected / displayed) * 100);
+    }
 
     var selectedTimes = '';
     var displayedTimes = '';
     var li = document.createElement('li');
-
-    
 
     if (selected === 1) {
       selectedTimes = 'time';
     } else {
       selectedTimes = 'times';
     }
-    
+
     if (displayed === 1) {
       displayedTimes = 'time';
     } else {
