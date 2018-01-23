@@ -13,9 +13,9 @@ Item.allItems = [];
 function Item(src, alt) {
   this.src = src;
   this.alt = alt;
-  Item.allItems.push(this);
   this.displayed = 0;
   this.selected = 0;
+  Item.allItems.push(this);
 }
 
 for (var i = 0; i < images.length; i++) {
@@ -47,7 +47,7 @@ function randomizer(e) {
   console.log('Selected: ' + target);
 
   // turn off randomizer
-  if (totalClicks === 5) {
+  if (totalClicks === 25) {
     displayTable();
   } else {
     setImages();
@@ -62,8 +62,8 @@ function displayTable() {
   for (var i = 0; i < Item.allItems.length; i++) {
     var selected = Item.allItems[i].selected;
     var displayed = Item.allItems[i].displayed;
-    var rate; 
-    
+    var rate;
+
     if (displayed === 0) {
       rate = 0;
     } else {
