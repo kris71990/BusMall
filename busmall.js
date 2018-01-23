@@ -34,7 +34,7 @@ imgEl3.addEventListener('click', randomizer);
 
 function randomizer(e) {
   totalClicks += 1;
-  console.log('Total: ' + totalClicks);
+  console.log('Total clicks: ' + totalClicks);
 
   // keep track of image that was clicked
   var target = e.target.alt;
@@ -60,22 +60,29 @@ function displayTable() {
   var ul = document.createElement('ul');
 
   for (var i = 0; i < Item.allItems.length; i++) {
+    var selected = Item.allItems[i].selected;
+    var displayed = Item.allItems[i].displayed;
+    var rate = Math.round((selected / displayed) * 100);
+
     var selectedTimes = '';
     var displayedTimes = '';
     var li = document.createElement('li');
-    if (Item.allItems[i].selected === 1) {
+
+    
+
+    if (selected === 1) {
       selectedTimes = 'time';
     } else {
       selectedTimes = 'times';
     }
     
-    if (Item.allItems[i].displayed === 1) {
+    if (displayed === 1) {
       displayedTimes = 'time';
     } else {
       displayedTimes = 'times';
     }
 
-    li.textContent = Item.allItems[i].alt + ' was displayed ' + Item.allItems[i].displayed + ' ' + displayedTimes + ' and selected ' + Item.allItems[i].selected + ' ' + selectedTimes;
+    li.innerHTML = Item.allItems[i].alt + ' was displayed ' + displayed + ' ' + displayedTimes + ' and selected ' + selected + ' ' + selectedTimes + '<br/>' + selected + '/' + displayed + ' is a ' + rate + '% selection rate.';
     ul.appendChild(li);
 
   }
@@ -93,7 +100,7 @@ function setImages() {
     } else {
       randomNumbers.push(random);
       Item.allItems[random].displayed += 1;
-      console.log('Displayed: ' + Item.allItems[random].alt + ' ' + Item.allItems[random].displayed);
+      console.log('Displayed: ' + Item.allItems[random].alt + '- ' + Item.allItems[random].displayed);
     }
   }
 
