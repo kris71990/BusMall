@@ -13,10 +13,6 @@ Item.allItems = [];
 Item.lastDisplayed = [];
 Item.totalVotes = [];
 
-// check if index is in lastDisplayed
-// if yes, choose new index, if no push to list
-// reset lastDisplayed array to []
-
 function Item(src, alt) {
   this.src = src;
   this.alt = alt;
@@ -47,7 +43,6 @@ function randomizer(e) {
   totalClicks += 1;
   console.log('Total clicks: ' + totalClicks);
 
-  // keep track of image that was clicked
   var target = e.target.alt;
   for (var x = 0; x < Item.allItems.length; x++) {
     if (Item.allItems[x].alt === target) {
@@ -58,11 +53,11 @@ function randomizer(e) {
   console.log('Selected: ' + target);
 
   // set more images or display data
-  if (totalClicks === 5) {
+  if (totalClicks === 25) {
     imgEl1.removeEventListener('click', randomizer);
     imgEl2.removeEventListener('click', randomizer);
     imgEl3.removeEventListener('click', randomizer);
-    
+
     displayTable();
     renderChart();
   } else {
@@ -70,7 +65,7 @@ function randomizer(e) {
   }
 }
 
-// called to display data
+// called to display list of data
 function displayTable() {
   totalClicks = 0;
   sectionImages.innerHTML = '';
@@ -113,7 +108,7 @@ function displayTable() {
     ul.appendChild(li);
 
   }
-  sectionTotal.setAttribute('style', 'border: 5px solid black');
+  sectionTotal.setAttribute('style', 'border: 10px double black');
   sectionTotal.appendChild(h3);
   sectionTotal.appendChild(ul);
 }
@@ -131,6 +126,8 @@ function renderChart() {
       }]
     },
     options: {
+      responsive: false,
+      maintainAspectRation: true,
       title: {
         display: true,
         text: 'Your Most Selected Items',
@@ -150,20 +147,22 @@ function renderChart() {
 
 // selects a set of three random images
 function setImages() {
-  // generate new set of random images and count the ones displayed
   var randomNumbers = [];
 
+  // generates random number that is unique in the current set, and also different from the last set
   for (var i = 0; i < elArray.length; i++) {
     var random = Math.floor(Math.random() * Item.allItems.length);
     if (randomNumbers.includes(random) || Item.lastDisplayed.includes(random)) {
       i -= 1;
     } else {
-
       randomNumbers.push(random);
-      if (Item.lastDisplayed.length > 3) {
-        Item.lastDisplayed = [];
+
+      if (i === elArray.length - 1) {
+        for (var x = 0; x < randomNumbers.length; x++) {
+          Item.lastDisplayed[x] = randomNumbers[x];
+        }
       }
-      Item.lastDisplayed[i] = random;
+      console.log(Item.lastDisplayed);
       Item.allItems[random].displayed += 1;
       console.log('Displayed: ' + Item.allItems[random].alt + '- ' + Item.allItems[random].displayed);
     }

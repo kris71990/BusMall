@@ -16,6 +16,12 @@ h3 {
 #totals {
   background-color: #9FC9F7;
   width: 400px;
+  margin: 50px auto;
+}
+
+#chart {
+  width: 90%;
+  height: auto;
   margin: 0 auto;
 }
 
@@ -38,3 +44,4 @@ ul {
 li {
   margin: 10px
 }
+
