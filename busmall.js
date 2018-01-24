@@ -53,7 +53,7 @@ function randomizer(e) {
   console.log('Selected: ' + target);
 
   // set more images or display data
-  if (totalClicks === 25) {
+  if (totalClicks === 5) {
     imgEl1.removeEventListener('click', randomizer);
     imgEl2.removeEventListener('click', randomizer);
     imgEl3.removeEventListener('click', randomizer);
@@ -147,6 +147,7 @@ function displayTable() {
 }
 
 function renderChart() {
+  var divEl = document.getElementById('button');
   var ctx = document.getElementById('chart').getContext('2d');
   var chart = new Chart(ctx, {
     type: 'bar',
@@ -176,16 +177,30 @@ function renderChart() {
       }
     }
   });
+  var button = document.createElement('button');
+  button.textContent = 'Vote Again';
+  divEl.appendChild(button);
+  button.addEventListener('click', function reload() {
+    button.removeEventListener('click', reload);
+    location.reload();
+  });
+
+  saveData();
 }
 
 setImages();
+
+
+function saveData() {
+  localStorage.votes = Item.totalVotes;
+}
 
 /*
 Dealing with Local Storage
 
 1. set (store results after each session)
 2. get (if user has already voted, load local storage; if not, load page as normal)
-3. clear ()
+3. clear (when testing logic)
 
 if (localStorage) {
   parse local storage
