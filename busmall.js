@@ -5,10 +5,10 @@ var imgEl2 = document.getElementById('image2');
 var imgEl3 = document.getElementById('image3');
 var sectionImages = document.getElementById('images');
 var sectionTotal = document.getElementById('totals');
-
 var elArray = [imgEl1, imgEl2, imgEl3];
 var images = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 var totalClicks = 0;
+
 Item.allItems = [];
 Item.lastDisplayed = [];
 Item.totalVotes = [];
@@ -63,6 +63,39 @@ function randomizer(e) {
   } else {
     setImages();
   }
+}
+
+// selects a set of three random images
+function setImages() {
+  var randomNumbers = [];
+
+  // generates random number that is unique in the current set, and also different from the last set
+  for (var i = 0; i < elArray.length; i++) {
+    var random = Math.floor(Math.random() * Item.allItems.length);
+    if (randomNumbers.includes(random) || Item.lastDisplayed.includes(random)) {
+      i -= 1;
+    } else {
+      randomNumbers.push(random);
+
+      if (i === elArray.length - 1) {
+        for (var x = 0; x < randomNumbers.length; x++) {
+          Item.lastDisplayed[x] = randomNumbers[x];
+        }
+      }
+      console.log(Item.lastDisplayed);
+      Item.allItems[random].displayed += 1;
+      console.log('Displayed: ' + Item.allItems[random].alt + '- ' + Item.allItems[random].displayed);
+    }
+  }
+
+  imgEl1.setAttribute('src', Item.allItems[randomNumbers[0]].src);
+  imgEl1.alt = Item.allItems[randomNumbers[0]].alt;
+
+  imgEl2.setAttribute('src', Item.allItems[randomNumbers[1]].src);
+  imgEl2.alt = Item.allItems[randomNumbers[1]].alt;
+
+  imgEl3.setAttribute('src', Item.allItems[randomNumbers[2]].src);
+  imgEl3.alt = Item.allItems[randomNumbers[2]].alt;
 }
 
 // called to display list of data
@@ -143,39 +176,6 @@ function renderChart() {
       }
     }
   });
-}
-
-// selects a set of three random images
-function setImages() {
-  var randomNumbers = [];
-
-  // generates random number that is unique in the current set, and also different from the last set
-  for (var i = 0; i < elArray.length; i++) {
-    var random = Math.floor(Math.random() * Item.allItems.length);
-    if (randomNumbers.includes(random) || Item.lastDisplayed.includes(random)) {
-      i -= 1;
-    } else {
-      randomNumbers.push(random);
-
-      if (i === elArray.length - 1) {
-        for (var x = 0; x < randomNumbers.length; x++) {
-          Item.lastDisplayed[x] = randomNumbers[x];
-        }
-      }
-      console.log(Item.lastDisplayed);
-      Item.allItems[random].displayed += 1;
-      console.log('Displayed: ' + Item.allItems[random].alt + '- ' + Item.allItems[random].displayed);
-    }
-  }
-
-  imgEl1.setAttribute('src', Item.allItems[randomNumbers[0]].src);
-  imgEl1.alt = Item.allItems[randomNumbers[0]].alt;
-
-  imgEl2.setAttribute('src', Item.allItems[randomNumbers[1]].src);
-  imgEl2.alt = Item.allItems[randomNumbers[1]].alt;
-
-  imgEl3.setAttribute('src', Item.allItems[randomNumbers[2]].src);
-  imgEl3.alt = Item.allItems[randomNumbers[2]].alt;
 }
 
 setImages();
