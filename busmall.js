@@ -179,3 +179,18 @@ function renderChart() {
 }
 
 setImages();
+
+/*
+Dealing with Local Storage
+
+1. set (store results after each session)
+2. get (if user has already voted, load local storage; if not, load page as normal)
+3. clear ()
+
+if (localStorage) {
+  parse local storage
+  modify logic for existing local storage
+} else {
+  load page as normal for first time
+}
+*/
