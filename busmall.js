@@ -53,7 +53,7 @@ function randomizer(e) {
   console.log('Selected: ' + target);
 
   // set more images or display data
-  if (totalClicks === 5) {
+  if (totalClicks === 25) {
     imgEl1.removeEventListener('click', randomizer);
     imgEl2.removeEventListener('click', randomizer);
     imgEl3.removeEventListener('click', randomizer);
