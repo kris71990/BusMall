@@ -57,8 +57,8 @@ function randomizer(e) {
     imgEl1.removeEventListener('click', randomizer);
     imgEl2.removeEventListener('click', randomizer);
     imgEl3.removeEventListener('click', randomizer);
-
     displayTable();
+    saveData();
     renderChart();
   } else {
     setImages();
@@ -147,14 +147,16 @@ function displayTable() {
 }
 
 function renderChart() {
+  var divEl = document.getElementById('button');
   var ctx = document.getElementById('chart').getContext('2d');
+  var storedData = JSON.parse(localStorage.total);
   var chart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: images,
       datasets : [{
         label: 'Items',
-        data: Item.totalVotes,
+        data: storedData,
         backgroundColor: ['black', 'red', 'black', 'red', 'black', 'red', 'black', 'red', 'black', 'red','black', 'red', 'black', 'red', 'black', 'red', 'black', 'red', 'black', 'red']
       }]
     },
@@ -176,6 +178,30 @@ function renderChart() {
       }
     }
   });
+
+  var button = document.createElement('button');
+  button.textContent = 'Vote Again';
+  divEl.appendChild(button);
+  button.addEventListener('click', function reload() {
+    button.removeEventListener('click', reload);
+    location.reload();
+  });
+}
+
+function saveData() {
+  if (localStorage.total) {
+    localStorage.setItem('current', JSON.stringify(Item.totalVotes));
+    var parseCurrent = JSON.parse(localStorage.current);
+    var parseTotal = JSON.parse(localStorage.total);
+
+    for (var i in parseCurrent) {
+      parseTotal[i] = parseTotal[i] + parseCurrent[i];
+    }
+    localStorage.setItem('total', JSON.stringify(parseTotal));
+
+  } else {
+    localStorage.setItem('total', JSON.stringify(Item.totalVotes));
+  }
 }
 
 setImages();

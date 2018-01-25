@@ -45,3 +45,10 @@ li {
   margin: 10px
 }
 
+#button {
+  width: 100px;
+  margin: 20px auto;
+}
+button {
+  padding: 5px 20px;
+}
