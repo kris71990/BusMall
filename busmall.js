@@ -150,7 +150,7 @@ function renderChart() {
   var divEl = document.getElementById('button');
   var ctx = document.getElementById('chart').getContext('2d');
   var storedData = JSON.parse(localStorage.total);
-  var chart = new Chart(ctx, {
+  var chart = new Chart(ctx, { // eslint-disable-line
     type: 'bar',
     data: {
       labels: images,
